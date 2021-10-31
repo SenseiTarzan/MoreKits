@@ -9,4 +9,6 @@ projects:
     libs:
       - src: CortexPE/Commando/Commando
         version: ^2.0.0
+      - src: jojoe77777/FormAPI/libFormAPI
+        version: ^1.3.0
 ...
