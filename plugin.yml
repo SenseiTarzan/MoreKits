@@ -1,0 +1,7 @@
+name: MoreKits
+main: Steellgold\MoreKits\MK
+api: 3.0.0
+version: 1.0.0
+author: Steellgold
+depend:
+  - Commando
