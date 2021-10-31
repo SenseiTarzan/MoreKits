@@ -10,11 +10,12 @@ namespace Steellgold\MoreKits;
 use CortexPE\Commando\exception\HookAlreadyRegistered;
 use CortexPE\Commando\PacketHooker;
 use pocketmine\plugin\PluginBase;
+use SQLite3;
 
 
 class MK extends PluginBase {
     private string $version = "1.0";
-    private \SQLite3 $database;
+    private SQLite3 $database;
     public static MK $instance;
 
     /**
@@ -26,8 +27,7 @@ class MK extends PluginBase {
         if ($this->getConfig()->exists("version") and $this->getConfig()->get("version") !== $this->version) {
             $this->getLogger()->alert("The plug-in configuration has been modified since an update, your old configuration has been renamed to old_config.yml");
             rename($this->getDataFolder() . "config.yml", $this->getDataFolder() . "old_config.yml");
-            $this->getServer()->getPluginManager()->disablePlugin($this);
-            return;
+            $this->getConfig()->relaod();
         }
 
         /**
@@ -46,12 +46,7 @@ class MK extends PluginBase {
         self::$instance = $instance;
     }
 
-    public function getDatabase() : \SQLite3 {
-        if($this->database == null){
-            $this->database = new \SQLite3($this->getDataFolder() . "kits.db");
-            return $this->database;
-        }
-
-        return $this->database;
+    public function getDatabase() : SQLite3 {
+        return $this->database ?? ($this->database = new \SQLite3($this->getDataFolder() . "kits.db"));
     }
 }
