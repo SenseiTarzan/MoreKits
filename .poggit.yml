@@ -2,5 +2,9 @@
 build-by-default: true
 branches:
 - main
-projects: []
+projects:
+  MoreKits:
+    path: ""
+    icon: icon.png
+...
 ...
