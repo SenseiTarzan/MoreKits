@@ -11,8 +11,10 @@ use CortexPE\Commando\exception\HookAlreadyRegistered;
 use CortexPE\Commando\PacketHooker;
 use pocketmine\plugin\PluginBase;
 
+
 class MK extends PluginBase {
     private string $version = "1.0";
+    private \SQLite3 $database;
     public static MK $instance;
 
     /**
@@ -28,6 +30,9 @@ class MK extends PluginBase {
             return;
         }
 
+        /**
+         * required by commando
+         */
         if(!PacketHooker::isRegistered()) {
             PacketHooker::register($this);
         }
@@ -39,5 +44,14 @@ class MK extends PluginBase {
 
     public static function setInstance($instance): void {
         self::$instance = $instance;
+    }
+
+    public function getDatabase() : \SQLite3 {
+        if($this->database == null){
+            $this->database = new \SQLite3($this->getDataFolder() . "kits.db");
+            return $this->database;
+        }
+
+        return $this->database;
     }
 }
